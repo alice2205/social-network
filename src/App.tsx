@@ -1,26 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {Header} from "./components/Header/Header";
+import {Navbar} from "./components/Navbar/Navbar";
+import {Profile} from "./components/Profile/Profile";
+import {Dialogs} from "./components/Dialogs/Dialogs";
+import {Route, Routes} from "react-router-dom";
+import {PostType, RootState} from "./redux/State";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+type RootStateType = {
+    state: RootState
+    addPost: (postMessage: string | undefined) => void
+    postsData?: Array<PostType>
 }
 
+const App: React.FC<RootStateType> = (props) => {
+  return (
+          <div className='app-wrapper'>
+              <Header/>
+              <Navbar/>
+              <div className='app-wrapper-content'>
+                  <Routes>
+                      <Route path={'/dialogs/*'} element={<Dialogs state={props.state.messagesPage}/>}/>
+                      <Route path={'/profile/*'} element={<Profile postsData={props.state.profilePage.postsData} addPost={props.addPost}/>}/>
+                  </Routes>
+              </div>
+          </div>
+  );
+}
 export default App;

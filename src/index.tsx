@@ -3,10 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {HashRouter} from "react-router-dom";
+import {state} from "./redux/State";
+import {addPost} from "./redux/State";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <HashRouter>
+          <App state={state} addPost={addPost}/>
+      </HashRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
